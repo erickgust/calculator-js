@@ -1,0 +1,11 @@
+html,
+body {
+  font-size: 10px;
+  height: 100%;
+}
+
+body {
+  background-color: #1E1E24;
+  margin: 0 auto;
+  font-family: 'Rubik', sans-serif;
+}
