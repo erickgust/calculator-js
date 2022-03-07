@@ -1,0 +1,32 @@
+.calc-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 6.5rem);
+  grid-template-rows: repeat(4, 6.5rem);
+  gap: 1rem;
+}
+
+.calc-buttons > .button {
+  font-size: 2.4rem;
+  font-weight: 500;
+  color: var(--color-ghost-white);
+
+  border-radius: 2rem;
+  background-color: var(--color-davys-grey);
+
+  transition: all 20ms ease-in;
+}
+
+.calc-buttons > .button.-highlighted {
+  color: var(--color-raisin-black);
+  background-color: var(--color-beau-blue);
+}
+
+.calc-buttons > .button.-equal {
+  color: var(--color-raisin-black);
+  background-color: var(--color-ghost-white);
+}
+
+.calc-buttons > .button:active {
+  border-radius: 1rem;
+  filter: brightness(1.3);
+}
