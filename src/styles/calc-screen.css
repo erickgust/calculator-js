@@ -1,0 +1,17 @@
+.calc-screen {
+  text-align: end;
+  padding: 3rem 1rem;
+  overflow-wrap: break-word;
+}
+
+.calc-screen > .current {
+  font-size: 4.8rem;
+  font-weight: 500;
+  color: var(--color-ghost-white);
+}
+
+.calc-screen > .result {
+  font-size: 3.6rem;
+  font-weight: 400;
+  color: var(--color-beau-blue);
+}
