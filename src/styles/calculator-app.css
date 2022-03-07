@@ -1,4 +1,5 @@
 .calculator-app {
+  padding: 1.5rem;
   max-width: 320px;
   width: 100%;
   margin: 0 auto;
