@@ -4,6 +4,7 @@ const $result = createScreenComponents('result');
 const numberButtons = document.querySelectorAll('[data-js="button-number"]');
 const operationButtons = document.querySelectorAll('[data-js="button-operation"]');
 const $allClearButton = getElement('button-ac');
+const $equalButton = getElement('button-equal');
 
 function getElement(elementName) {
   return document.querySelector(`[data-js="${elementName}"]`);
@@ -20,10 +21,7 @@ function handleClickNumber({ target }) {
 }
 
 function handleCLickOperator({ target }) {
-  if (isLastItemAnOperator()) {
-    $current.textContent = $current.textContent.slice(0, -1);
-  }
-
+  removeLastOperator();
   $current.textContent += target.value;
 }
 
@@ -36,6 +34,31 @@ function isLastItemAnOperator() {
 function handleClearButton() {
   $current.textContent = '';
 }
+
+function isFirstItemAnOperator() {
+  const operators = ['-', '+', 'x', '÷'];
+  const lastItem = $current.textContent.charAt(0);
+  return operators.includes(lastItem);
+}
+
+function removeFirstOperator() {
+  if (isFirstItemAnOperator()) {
+    $current.textContent = $current.textContent.slice(1);
+  }
+}
+
+function removeLastOperator() {
+  if (isLastItemAnOperator()) {
+    $current.textContent = $current.textContent.slice(0, -1);
+  }
+}
+
+function handleEqualButton() {
+  removeLastOperator();
+  removeFirstOperator();
+}
+
+$equalButton.addEventListener('click', handleEqualButton);
 
 $allClearButton.addEventListener('click', handleClearButton);
 
