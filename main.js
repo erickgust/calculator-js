@@ -1,22 +1,30 @@
 const $screen = getElement('screen');
+const $current = createScreenComponents('current');
+const $result = createScreenComponents('result');
+const numberButtons = document.querySelectorAll('[data-js="button-number"]');
+const operationButtons = document.querySelectorAll('[data-js="button-operation"]');
 
 function getElement(elementName) {
   return document.querySelector(`[data-js="${elementName}"]`);
 }
 
-function showCurrentOperation(value) {
-  const $current = document.createElement('div');
-  $current.className = 'current';
-  $current.textContent = value;
-  $screen.appendChild($current);
+function createScreenComponents(className) {
+  const $div = document.createElement('div');
+  $div.className = className;
+  return $div;
 }
 
-function showResultOperation(value) {
-  const $result = document.createElement('div');
-  $result.className = 'result';
-  $result.textContent = value;
-  $screen.appendChild($result);
-}
+numberButtons.forEach((button) => {
+  button.addEventListener('click', ({ target }) => {
+    $current.textContent += target.value;
+  });
+});
 
-showCurrentOperation('1 + 2');
-showResultOperation('3');
+operationButtons.forEach((button) => {
+  button.addEventListener('click', ({ target }) => {
+    $current.textContent += target.value;
+  });
+});
+
+$screen.appendChild($current);
+$screen.appendChild($result);
