@@ -19,7 +19,17 @@ function handleClickNumber({ target }) {
 }
 
 function handleCLickOperator({ target }) {
+  if (isLastItemAnOperator()) {
+    $current.textContent = $current.textContent.slice(0, -1);
+  }
+
   $current.textContent += target.value;
+}
+
+function isLastItemAnOperator() {
+  const operators = ['-', '+', 'x', '÷'];
+  const lastItem = $current.textContent.slice(-1);
+  return operators.includes(lastItem);
 }
 
 numberButtons.forEach((button) => {
