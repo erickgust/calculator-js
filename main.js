@@ -14,16 +14,20 @@ function createScreenComponents(className) {
   return $div;
 }
 
+function handleClickNumber({ target }) {
+  $current.textContent += target.value;
+}
+
+function handleCLickOperator({ target }) {
+  $current.textContent += target.value;
+}
+
 numberButtons.forEach((button) => {
-  button.addEventListener('click', ({ target }) => {
-    $current.textContent += target.value;
-  });
+  button.addEventListener('click', handleClickNumber);
 });
 
 operationButtons.forEach((button) => {
-  button.addEventListener('click', ({ target }) => {
-    $current.textContent += target.value;
-  });
+  button.addEventListener('click', handleCLickOperator);
 });
 
 $screen.appendChild($current);
