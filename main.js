@@ -1,10 +1,3 @@
-import './src/styles/reset.css';
-import './src/styles/colors.css';
-import './src/styles/base.css';
-import './src/styles/calculator-app.css';
-import './src/styles/calc-screen.css';
-import './src/styles/calc-buttons.css';
-
 const $screen = getElement('screen');
 
 function getElement(elementName) {
