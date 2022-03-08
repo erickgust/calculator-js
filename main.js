@@ -3,6 +3,7 @@ const $current = createScreenComponents('current');
 const $result = createScreenComponents('result');
 const numberButtons = document.querySelectorAll('[data-js="button-number"]');
 const operationButtons = document.querySelectorAll('[data-js="button-operation"]');
+const $allClearButton = getElement('button-ac');
 
 function getElement(elementName) {
   return document.querySelector(`[data-js="${elementName}"]`);
@@ -31,6 +32,12 @@ function isLastItemAnOperator() {
   const lastItem = $current.textContent.slice(-1);
   return operators.includes(lastItem);
 }
+
+function handleClearButton() {
+  $current.textContent = '';
+}
+
+$allClearButton.addEventListener('click', handleClearButton);
 
 numberButtons.forEach((button) => {
   button.addEventListener('click', handleClickNumber);
