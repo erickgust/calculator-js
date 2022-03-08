@@ -6,10 +6,10 @@ const operationButtons = document.querySelectorAll('[data-js="button-operation"]
 const $allClearButton = getElement('button-ac');
 const $equalButton = getElement('button-equal');
 const doOperation = {
-  '+': (number1, number2) => number1 + number2,
-  '-': (number1, number2) => number1 - number2,
-  '÷': (number1, number2) => number1 / number2,
-  x: (number1, number2) => number1 * number2,
+  '+': (number1, number2) => +number1 + +number2,
+  '-': (number1, number2) => +number1 - +number2,
+  '÷': (number1, number2) => +number1 / +number2,
+  x: (number1, number2) => +number1 * +number2,
 };
 
 function getElement(elementName) {
