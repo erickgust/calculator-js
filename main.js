@@ -5,6 +5,12 @@ const numberButtons = document.querySelectorAll('[data-js="button-number"]');
 const operationButtons = document.querySelectorAll('[data-js="button-operation"]');
 const $allClearButton = getElement('button-ac');
 const $equalButton = getElement('button-equal');
+const doOperation = {
+  '+': (number1, number2) => number1 + number2,
+  '-': (number1, number2) => number1 - number2,
+  '÷': (number1, number2) => number1 / number2,
+  x: (number1, number2) => number1 * number2,
+};
 
 function getElement(elementName) {
   return document.querySelector(`[data-js="${elementName}"]`);
@@ -25,14 +31,14 @@ function handleCLickOperator({ target }) {
   $current.textContent += target.value;
 }
 
+function handleClearButton() {
+  $current.textContent = '';
+}
+
 function isLastItemAnOperator() {
   const operators = ['-', '+', 'x', '÷'];
   const lastItem = $current.textContent.slice(-1);
   return operators.includes(lastItem);
-}
-
-function handleClearButton() {
-  $current.textContent = '';
 }
 
 function isFirstItemAnOperator() {
@@ -56,6 +62,10 @@ function removeLastOperator() {
 function handleEqualButton() {
   removeLastOperator();
   removeFirstOperator();
+  console.log(doOperation['÷'](9, 3));
+  console.log(doOperation.x(9, 3));
+  console.log(doOperation['+'](4, 6));
+  console.log(doOperation['-'](3, 3));
 }
 
 $equalButton.addEventListener('click', handleEqualButton);
