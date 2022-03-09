@@ -24,6 +24,7 @@ function createScreenComponents(className) {
 
 function handleClickNumber({ target }) {
   $current.textContent += target.value;
+  showResult();
 }
 
 function handleCLickOperator({ target }) {
@@ -75,13 +76,22 @@ function getOperation(operation, regex) {
     : operation;
 }
 
-function handleEqualButton() {
+function showResult() {
+  $result.textContent = getResult();
+}
+
+function getResult() {
   removeLastOperator();
   removeFirstOperator();
 
   const operation = $current.textContent;
   const solvedOperation = getOperation(operation, /\d+([x÷])\d+/);
-  $result.textContent = getOperation(solvedOperation, /\d+([-+])\d+/);
+  return getOperation(solvedOperation, /\d+([-+])\d+/);
+}
+
+function handleEqualButton() {
+  $current.textContent = getResult();
+  $result.textContent = '';
 }
 
 $equalButton.addEventListener('click', handleEqualButton);
