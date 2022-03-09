@@ -34,7 +34,7 @@ function handleCLickOperator({ target }) {
 
 function handleClearButton() {
   $current.textContent = '';
-  $result.textContent = '';
+  clearResult();
 }
 
 function isLastItemAnOperator() {
@@ -76,10 +76,14 @@ function getOperation(operation, regex) {
     : operation;
 }
 
+function clearResult() {
+  $result.textContent = '';
+}
+
 function showResult() {
   const result = getResult();
   if (result === $current.textContent) {
-    $result.textContent = '';
+    clearResult();
     return;
   }
 
@@ -102,7 +106,7 @@ function getResult() {
 
 function handleEqualButton() {
   $current.textContent = getResult();
-  $result.textContent = '';
+  clearResult();
 }
 
 $equalButton.addEventListener('click', handleEqualButton);
