@@ -33,6 +33,7 @@ function handleCLickOperator({ target }) {
 
 function handleClearButton() {
   $current.textContent = '';
+  $result.textContent = '';
 }
 
 function isLastItemAnOperator() {
