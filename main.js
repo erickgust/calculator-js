@@ -77,7 +77,13 @@ function getOperation(operation, regex) {
 }
 
 function showResult() {
-  $result.textContent = getResult();
+  const result = getResult();
+  if (result === $current.textContent) {
+    $result.textContent = '';
+    return;
+  }
+
+  $result.textContent = result;
 }
 
 function createRegex(signal) {
