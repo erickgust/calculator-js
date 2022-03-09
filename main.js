@@ -80,13 +80,18 @@ function showResult() {
   $result.textContent = getResult();
 }
 
+function createRegex(signal) {
+  const regex = new RegExp(`\\d+\\.?\\d?(${signal})\\d+\\.?\\d?`);
+  return regex;
+}
+
 function getResult() {
   removeLastOperator();
   removeFirstOperator();
 
   const operation = $current.textContent;
-  const solvedOperation = getOperation(operation, /\d+([x÷])\d+/);
-  return getOperation(solvedOperation, /\d+([-+])\d+/);
+  const solvedOperation = getOperation(operation, createRegex('[x÷]'));
+  return getOperation(solvedOperation, createRegex('[-+]'));
 }
 
 function handleEqualButton() {
