@@ -101,7 +101,8 @@ function getResult() {
 
   const operation = $current.textContent;
   const solvedOperation = getOperation(operation, createRegex('[x÷]'));
-  return getOperation(solvedOperation, createRegex('[-+]'));
+  const result = +getOperation(solvedOperation, createRegex('[-+]'));
+  return (+result.toFixed(6)).toString();
 }
 
 function handleEqualButton() {
