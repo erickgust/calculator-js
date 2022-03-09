@@ -91,7 +91,8 @@ function showResult() {
 }
 
 function createRegex(signal) {
-  const regex = new RegExp(`\\d+\\.?\\d?(${signal})\\d+\\.?\\d?`);
+  const numberPattern = '(?:\\d+)\\.?(?:\\d+)?';
+  const regex = new RegExp(`${numberPattern}(${signal})${numberPattern}`);
   return regex;
 }
 
