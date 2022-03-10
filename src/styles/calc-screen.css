@@ -2,7 +2,9 @@
   text-align: end;
   padding: 3rem 1rem;
   overflow-wrap: break-word;
-  height: 17rem;
+  height: 20rem;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
 }
 
 .calc-screen > .current {
