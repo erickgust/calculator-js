@@ -1,20 +1,56 @@
 .calc-screen {
   text-align: end;
   padding: 3rem 1rem;
-  overflow-wrap: break-word;
   height: 20rem;
   margin-top: 3rem;
   margin-bottom: 3rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
 }
 
-.calc-screen > .current {
+.calc-screen > .cover {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  scroll-snap-type: x proximity;
+}
+
+.calc-screen > .cover > .current {
   font-size: 4.8rem;
   font-weight: 500;
   color: var(--color-ghost-white);
+
+  display: inline-block;
+  scroll-snap-align: end;
 }
 
 .calc-screen > .result {
   font-size: 3.6rem;
   font-weight: 400;
   color: var(--color-beau-blue);
+
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+
+.calc-screen > .cover,
+.calc-screen > .result {
+  scrollbar-color: var(--color-ghost-white) transparent;
+}
+
+.calc-screen > .cover::-webkit-scrollbar,
+.calc-screen > .result::-webkit-scrollbar {
+  height: 5px;
+}
+
+.calc-screen > .cover::-webkit-scrollbar-track,
+.calc-screen > .result::-webkit-scrollbar-track {
+  background: transparent;
+}
+.calc-screen > .cover::-webkit-scrollbar-thumb,
+.calc-screen > .result::-webkit-scrollbar-thumb {
+  background-color: var(--color-ghost-white);
+  border-radius: 1rem;
 }

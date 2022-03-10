@@ -1,4 +1,5 @@
 const $screen = getElement('screen');
+const $cover = createScreenComponents('cover');
 const $current = createScreenComponents('current');
 const $result = createScreenComponents('result');
 const numberButtons = document.querySelectorAll('[data-js="button-number"]');
@@ -102,12 +103,13 @@ function getResult() {
 
   const operation = $current.textContent;
   const solvedOperation = getOperation(operation, createRegex('[x÷]'));
-  const result = +getOperation(solvedOperation, createRegex('[-+]'));
-  return (+result.toFixed(6)).toString();
+  const result = getOperation(solvedOperation, createRegex('[-+]'));
+  return result;
 }
 
 function handleEqualButton() {
   $current.textContent = getResult();
+  $current.style.scrollSnapAlign = 'start';
   clearResult();
 }
 
@@ -123,5 +125,6 @@ operationButtons.forEach((button) => {
   button.addEventListener('click', handleCLickOperator);
 });
 
-$screen.appendChild($current);
+$cover.appendChild($current);
+$screen.appendChild($cover);
 $screen.appendChild($result);
