@@ -1,3 +1,4 @@
+import getResult from './src/js/calculator';
 import getElement from './src/js/getElement';
 import { addCurrent, addResult, getCurrent } from './src/js/screen';
 
@@ -5,12 +6,6 @@ const numberButtons = document.querySelectorAll('[data-js="button-number"]');
 const operationButtons = document.querySelectorAll('[data-js="button-operation"]');
 const $allClearButton = getElement('button-ac');
 const $equalButton = getElement('button-equal');
-const doOperation = {
-  '+': (number1, number2) => +number1 + +number2,
-  '-': (number1, number2) => +number1 - +number2,
-  '÷': (number1, number2) => +number1 / +number2,
-  x: (number1, number2) => +number1 * +number2,
-};
 
 function handleClickNumber({ target }) {
   const value = getCurrent() + target.value;
@@ -48,21 +43,6 @@ function removeLastOperator(value) {
   return value;
 }
 
-function solveOperation(operation, regex) {
-  const [match, signal] = operation.match(regex);
-  const numbers = match.split(signal);
-  const result = doOperation[signal](...numbers);
-  const addResultInOperation = operation.split(match).join(result);
-  return getOperation(addResultInOperation, regex);
-}
-
-function getOperation(operation, regex) {
-  const hasSignal = regex.test(operation);
-  return hasSignal
-    ? solveOperation(operation, regex)
-    : operation;
-}
-
 function clearResult() {
   addResult('');
 }
@@ -75,21 +55,8 @@ function showResult(current) {
   addResult(result);
 }
 
-function createRegex(signal) {
-  const numberPattern = '(?:\\d+)\\.?(?:\\d+)?';
-  const regex = new RegExp(`${numberPattern}(${signal})${numberPattern}`);
-  return regex;
-}
-
-function getResult(value) {
-  const operation = removeLastOperator(value);
-  const solvedOperation = getOperation(operation, createRegex('[x÷]'));
-  const result = getOperation(solvedOperation, createRegex('[-+]'));
-  return result;
-}
-
 function handleEqualButton() {
-  const current = getCurrent();
+  const current = removeLastOperator(getCurrent());
   addCurrent(getResult(current));
   clearResult();
 }
