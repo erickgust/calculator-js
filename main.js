@@ -15,7 +15,7 @@ const doOperation = {
 function handleClickNumber({ target }) {
   const value = getCurrent() + target.value;
   addCurrent(value);
-  showResult();
+  showResult(value);
 }
 
 function handleCLickOperator({ target }) {
@@ -67,13 +67,11 @@ function clearResult() {
   addResult('');
 }
 
-function showResult() {
-  const result = getResult();
-  if (result === getCurrent()) {
-    clearResult();
+function showResult(current) {
+  const result = getResult(current);
+  if (result === current) {
     return;
   }
-
   addResult(result);
 }
 
@@ -83,15 +81,16 @@ function createRegex(signal) {
   return regex;
 }
 
-function getResult() {
-  const operation = removeLastOperator(getCurrent());
+function getResult(value) {
+  const operation = removeLastOperator(value);
   const solvedOperation = getOperation(operation, createRegex('[x÷]'));
   const result = getOperation(solvedOperation, createRegex('[-+]'));
   return result;
 }
 
 function handleEqualButton() {
-  addCurrent(getResult());
+  const current = getCurrent();
+  addCurrent(getResult(current));
   clearResult();
 }
 
