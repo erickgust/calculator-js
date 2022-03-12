@@ -1,7 +1,6 @@
-const $screen = getElement('screen');
-const $cover = createScreenComponents('cover');
-const $current = createScreenComponents('current');
-const $result = createScreenComponents('result');
+import getElement from './src/js/getElement';
+import { addCurrent, addResult, getCurrent } from './src/js/screen';
+
 const numberButtons = document.querySelectorAll('[data-js="button-number"]');
 const operationButtons = document.querySelectorAll('[data-js="button-operation"]');
 const $allClearButton = getElement('button-ac');
@@ -13,52 +12,44 @@ const doOperation = {
   x: (number1, number2) => +number1 * +number2,
 };
 
-function getElement(elementName) {
-  return document.querySelector(`[data-js="${elementName}"]`);
-}
-
-function createScreenComponents(className) {
-  const $div = document.createElement('div');
-  $div.className = className;
-  return $div;
-}
-
 function handleClickNumber({ target }) {
-  $current.textContent += target.value;
+  const value = getCurrent() + target.value;
+  addCurrent(value);
   showResult();
 }
 
 function handleCLickOperator({ target }) {
   removeLastOperator();
-  $current.textContent += target.value;
+  const value = getCurrent() + target.value;
+  addCurrent(value);
 }
 
 function handleClearButton() {
-  $current.textContent = '';
+  addCurrent('');
   clearResult();
 }
 
 function isLastItemAnOperator() {
   const operators = ['-', '+', 'x', '÷'];
-  const lastItem = $current.textContent.slice(-1);
+  const lastItem = getCurrent().slice(-1);
   return operators.includes(lastItem);
 }
 
 function isFirstItemAnOperator() {
   const operators = ['-', '+', 'x', '÷'];
-  const lastItem = $current.textContent.charAt(0);
+  const lastItem = getCurrent().charAt(0);
   return operators.includes(lastItem);
 }
 
 function removeFirstOperator() {
   if (isFirstItemAnOperator()) {
-    $current.textContent = $current.textContent.slice(1);
+    addCurrent(getCurrent().slice(1));
   }
 }
 
 function removeLastOperator() {
   if (isLastItemAnOperator()) {
-    $current.textContent = $current.textContent.slice(0, -1);
+    addCurrent(getCurrent().slice(0, -1));
   }
 }
 
@@ -78,17 +69,17 @@ function getOperation(operation, regex) {
 }
 
 function clearResult() {
-  $result.textContent = '';
+  addResult('');
 }
 
 function showResult() {
   const result = getResult();
-  if (result === $current.textContent) {
+  if (result === getCurrent()) {
     clearResult();
     return;
   }
 
-  $result.textContent = result;
+  addResult(result);
 }
 
 function createRegex(signal) {
@@ -101,15 +92,14 @@ function getResult() {
   removeLastOperator();
   removeFirstOperator();
 
-  const operation = $current.textContent;
+  const operation = getCurrent();
   const solvedOperation = getOperation(operation, createRegex('[x÷]'));
   const result = getOperation(solvedOperation, createRegex('[-+]'));
   return result;
 }
 
 function handleEqualButton() {
-  $current.textContent = getResult();
-  $current.style.scrollSnapAlign = 'start';
+  addCurrent(getResult());
   clearResult();
 }
 
@@ -124,7 +114,3 @@ numberButtons.forEach((button) => {
 operationButtons.forEach((button) => {
   button.addEventListener('click', handleCLickOperator);
 });
-
-$cover.appendChild($current);
-$screen.appendChild($cover);
-$screen.appendChild($result);
