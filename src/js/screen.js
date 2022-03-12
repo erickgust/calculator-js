@@ -1,3 +1,4 @@
+import getResult from './calculator';
 import getElement from './getElement';
 
 const $screen = getElement('screen');
@@ -23,8 +24,22 @@ function addResult(value) {
   $result.textContent = value;
 }
 
+function clearResult() {
+  addResult('');
+}
+
+function showResult(current) {
+  const result = getResult(current);
+  if (result === current) {
+    return;
+  }
+  addResult(result);
+}
+
 $cover.appendChild($current);
 $screen.appendChild($cover);
 $screen.appendChild($result);
 
-export { getCurrent, addCurrent, addResult };
+export {
+  getCurrent, addCurrent, clearResult, showResult,
+};
