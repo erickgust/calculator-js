@@ -19,13 +19,13 @@ function handleClickNumber({ target }) {
 }
 
 function handleCLickOperator({ target }) {
-  const current = getCurrent();
+  const current = removeLastOperator(getCurrent());
+  const value = current + target.value;
+
   if (current === '') {
     return;
   }
 
-  removeLastOperator();
-  const value = getCurrent() + target.value;
   addCurrent(value);
 }
 
@@ -34,16 +34,18 @@ function handleClearButton() {
   clearResult();
 }
 
-function isLastItemAnOperator() {
+function isLastItemAnOperator(value) {
   const operators = ['-', '+', 'x', '÷'];
-  const lastItem = getCurrent().slice(-1);
+  const lastItem = value.slice(-1);
   return operators.includes(lastItem);
 }
 
-function removeLastOperator() {
-  if (isLastItemAnOperator()) {
-    addCurrent(getCurrent().slice(0, -1));
+function removeLastOperator(value) {
+  if (isLastItemAnOperator(value)) {
+    return value.slice(0, -1);
   }
+
+  return value;
 }
 
 function solveOperation(operation, regex) {
@@ -82,9 +84,7 @@ function createRegex(signal) {
 }
 
 function getResult() {
-  removeLastOperator();
-
-  const operation = getCurrent();
+  const operation = removeLastOperator(getCurrent());
   const solvedOperation = getOperation(operation, createRegex('[x÷]'));
   const result = getOperation(solvedOperation, createRegex('[-+]'));
   return result;
