@@ -19,6 +19,11 @@ function handleClickNumber({ target }) {
 }
 
 function handleCLickOperator({ target }) {
+  const current = getCurrent();
+  if (current === '') {
+    return;
+  }
+
   removeLastOperator();
   const value = getCurrent() + target.value;
   addCurrent(value);
@@ -33,18 +38,6 @@ function isLastItemAnOperator() {
   const operators = ['-', '+', 'x', '÷'];
   const lastItem = getCurrent().slice(-1);
   return operators.includes(lastItem);
-}
-
-function isFirstItemAnOperator() {
-  const operators = ['-', '+', 'x', '÷'];
-  const lastItem = getCurrent().charAt(0);
-  return operators.includes(lastItem);
-}
-
-function removeFirstOperator() {
-  if (isFirstItemAnOperator()) {
-    addCurrent(getCurrent().slice(1));
-  }
 }
 
 function removeLastOperator() {
@@ -90,7 +83,6 @@ function createRegex(signal) {
 
 function getResult() {
   removeLastOperator();
-  removeFirstOperator();
 
   const operation = getCurrent();
   const solvedOperation = getOperation(operation, createRegex('[x÷]'));
