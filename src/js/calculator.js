@@ -1,3 +1,5 @@
+import '../styles/calculator-app.css';
+
 const doOperation = {
   '+': (number1, number2) => +number1 + +number2,
   '-': (number1, number2) => +number1 - +number2,

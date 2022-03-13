@@ -1,3 +1,4 @@
+import '../styles/calc-buttons.css';
 import getResult from './calculator';
 import getElement from './getElement';
 import {
