@@ -63,7 +63,7 @@ Give a ⭐️ if this project helped you!
 ## 📝 License
 
 Copyright © 2022 [Erick Gustavo](https://github.com/erickgust).<br />
-This project is [MIT](https://github.com/erickgust/calculator-js/LICENSE) licensed.
+This project is [MIT](https://github.com/erickgust/calculator-js/blob/main/LICENSE.md) licensed.
 
 ***
 _This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
