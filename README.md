@@ -9,7 +9,7 @@
 
 ### 🏠 [Homepage](https://github.com/erickgust/calculator-js/blob/main/README.md)
 
-### ✨ [Demo](https://github.com/erickgust/calculator-js)
+### ✨ [Demo](https://erickgust.github.io/calculator-js)
 
 ## Usage
 
