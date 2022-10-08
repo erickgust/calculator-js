@@ -1,5 +1,5 @@
 {
-  "name": "your-project-name",
+  "name": "calculator-js",
   "sources": [
     {
       "dir": "src",
@@ -13,5 +13,7 @@
     }
   ],
   "suffix": ".bs.js",
-  "bs-dependencies": []
+  "bs-dependencies": [
+    "rescript-webapi"
+  ]
 }
