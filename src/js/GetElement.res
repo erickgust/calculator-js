@@ -1,5 +1,5 @@
-%%raw(`
-export default function getElement(elementName) {
-  return document.querySelector(\`[data-js="\${elementName}"]\`);
+open Webapi.Dom
+
+let getElement = (elementName) => {
+  document -> Document.querySelector(`[data-js="${elementName}"]`)
 }
-`)
