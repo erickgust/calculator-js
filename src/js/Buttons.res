@@ -1,67 +1,90 @@
-%%raw(`
-import '../styles/calc-buttons.css';
-import getResult from './calculator';
-import getElement from './getElement';
-import {
-  addCurrent, clearResult, getCurrent, showResult,
-} from './screen';
+%%raw(`import '../styles/calc-buttons.css'`)
+open Webapi.Dom
 
-const numberButtons = document.querySelectorAll('[data-js="button-number"]');
-const operationButtons = document.querySelectorAll('[data-js="button-operation"]');
-const $allClearButton = getElement('button-ac');
-const $equalButton = getElement('button-equal');
+let getResult = Calculator.getResult
 
-function handleClickNumber({ target }) {
-  const value = getCurrent() + target.value;
-  addCurrent(value);
-  showResult(value);
+let getElement = GetElement.getElement
+
+let addCurrent = Screen.addCurrent
+let clearResult = Screen.clearResult
+let getCurrent = Screen.getCurrent
+let showResult = Screen.showResult
+
+let numberButtons = document -> Document.querySelectorAll("[data-js='button-number']")
+let operationButtons = document -> Document.querySelectorAll("[data-js='button-operation']")
+let allClearButton = getElement("button-ac")
+let equalButton = getElement("button-equal")
+
+let handleClickNumber = (value) => {
+  let value = getCurrent() ++ value
+  addCurrent(value)
+  showResult(value)
 }
 
-function handleCLickOperator({ target }) {
-  const current = removeLastOperator(getCurrent());
-  const value = current + target.value;
+let isLastItemAnOperator = (value) => {
+  let operators = ["-", "+", "x", "÷"]
+  let lastItem = value -> Js.String2.sliceToEnd(~from=-1)
+  operators -> Js.Array2.includes(lastItem)
+}
 
-  if (current === '') {
-    return;
+let removeLastOperator = (value) => {
+  isLastItemAnOperator(value)
+    ? value -> Js.String2.slice(~from=0, ~to_=-1)
+    : value
+}
+
+let handleCLickOperator = (value) => {
+  let current = getCurrent() -> removeLastOperator
+  let value = current ++ value
+
+  if current != "" {
+    addCurrent(value)
   }
-
-  addCurrent(value);
 }
 
-function handleClearButton() {
-  addCurrent('');
-  clearResult();
+let handleClearButton = () => {
+  addCurrent("")
+  clearResult()
 }
 
-function isLastItemAnOperator(value) {
-  const operators = ['-', '+', 'x', '÷'];
-  const lastItem = value.slice(-1);
-  return operators.includes(lastItem);
+let handleEqualButton = () => {
+  let current = getCurrent() -> removeLastOperator
+  current -> getResult -> addCurrent
+  clearResult()
 }
 
-function removeLastOperator(value) {
-  if (isLastItemAnOperator(value)) {
-    return value.slice(0, -1);
-  }
-
-  return value;
+switch equalButton {
+  | Some(element)  => element -> Element.addClickEventListener((_e) => handleEqualButton())
+  | None => ()
 }
 
-function handleEqualButton() {
-  const current = removeLastOperator(getCurrent());
-  addCurrent(getResult(current));
-  clearResult();
+switch allClearButton {
+  | Some(element)  => element -> Element.addClickEventListener((_e) => handleClearButton())
+  | None => ()
 }
 
-$equalButton.addEventListener('click', handleEqualButton);
+numberButtons -> NodeList.forEach((button, _index) => {
+  button -> Node.addClickEventListener(e => {
+    e
+      -> MouseEvent.target
+      -> EventTarget.unsafeAsElement
+      -> Element.asNode
+      -> HtmlButtonElement.ofNode
+      -> Belt.Option.getExn
+      -> HtmlButtonElement.value
+      -> handleClickNumber
+    })
+})
 
-$allClearButton.addEventListener('click', handleClearButton);
-
-numberButtons.forEach((button) => {
-  button.addEventListener('click', handleClickNumber);
-});
-
-operationButtons.forEach((button) => {
-  button.addEventListener('click', handleCLickOperator);
-});
-`)
+operationButtons -> NodeList.forEach((button, _index) => {
+  button -> Node.addClickEventListener(e => {
+    e
+      -> MouseEvent.target
+      -> EventTarget.unsafeAsElement
+      -> Element.asNode
+      -> HtmlButtonElement.ofNode
+      -> Belt.Option.getExn
+      -> HtmlButtonElement.value
+      -> handleCLickOperator
+    })
+})
