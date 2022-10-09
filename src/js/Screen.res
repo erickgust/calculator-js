@@ -1,48 +1,49 @@
-%%raw(`
-import '../styles/calc-screen.css';
-import getResult from './calculator';
-import getElement from './getElement';
+%%raw(`import '../styles/calc-screen.css'`)
+open Webapi.Dom
 
-const $screen = getElement('screen');
-const $cover = createScreenComponents('cover');
-const $current = createScreenComponents('current');
-const $result = createScreenComponents('result');
+let createScreenComponents = (className) => {
+  let component = document
+    -> Document.createElement("div")
 
-function createScreenComponents(className) {
-  const $div = document.createElement('div');
-  $div.className = className;
-  return $div;
+  Element.setClassName(component, className)
+  component
 }
 
-function getCurrent() {
-  return $current.textContent;
+let getElement = GetElement.getElement
+let getResult = Calculator.getResult
+
+let screen = getElement("screen")
+let cover = createScreenComponents("cover")
+let current = createScreenComponents("current")
+let result = createScreenComponents("result")
+
+let getCurrent = () => {
+  current -> Element.textContent
 }
 
-function addCurrent(value) {
-  $current.textContent = value;
+let addCurrent = (value) => {
+  current -> Element.setTextContent(value)
 }
 
-function addResult(value) {
-  $result.textContent = value;
+let addResult = (value) => {
+  result -> Element.setTextContent(value)
 }
 
-function clearResult() {
-  addResult('');
-}
+let clearResult = () => addResult("")
 
-function showResult(current) {
-  const result = getResult(current);
-  if (result === current) {
-    return;
+let showResult = (current) => {
+  let result = getResult(current)
+  if result != current {
+    addResult(result)
   }
-  addResult(result);
 }
 
-$cover.appendChild($current);
-$screen.appendChild($cover);
-$screen.appendChild($result);
+switch screen {
+| Some(element) => {
+  element -> Element.appendChild(~child=cover)
+  element -> Element.appendChild(~child=result)
+}
+| None => ()
+}
 
-export {
-  getCurrent, addCurrent, clearResult, showResult,
-};
-`)
+cover -> Element.appendChild(~child=current)
