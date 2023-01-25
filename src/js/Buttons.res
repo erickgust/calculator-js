@@ -33,7 +33,7 @@ let removeLastOperator = (value) => {
     : value
 }
 
-let handleCLickOperator = (value) => {
+let handleClickOperator = (value) => {
   let current = getCurrent() -> removeLastOperator
   let value = current ++ value
 
@@ -48,9 +48,7 @@ let handleClearButton = () => {
 }
 
 let handleEqualButton = () => {
-  let current = getCurrent() -> removeLastOperator
-  current -> getResult -> addCurrent
-  clearResult()
+  Screen.setResultAsCurrent()
 }
 
 switch equalButton {
@@ -85,6 +83,6 @@ operationButtons -> NodeList.forEach((button, _index) => {
       -> HtmlButtonElement.ofNode
       -> Belt.Option.getExn
       -> HtmlButtonElement.value
-      -> handleCLickOperator
+      -> handleClickOperator
     })
 })

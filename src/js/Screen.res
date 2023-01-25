@@ -20,14 +20,14 @@ let result = createScreenComponents("result")
 let getCurrent = () => {
   current
     -> Element.textContent
-    -> Js.String2.replace("x", "*")
+    -> Js.String2.replace("×", "*")
     -> Js.String2.replace("÷", "/")
 }
 
 let addCurrent = (value) => {
   current -> Element.setTextContent(
     value
-      -> Js.String2.replace("*", "x")
+      -> Js.String2.replace("*", "×")
       -> Js.String2.replace("/", "÷")
   )
 }
@@ -37,6 +37,14 @@ let addResult = (value) => {
 }
 
 let clearResult = () => addResult("")
+
+let setResultAsCurrent = () => {
+  let result = result -> Element.textContent
+  addCurrent(result)
+  clearResult()
+
+  current -> Element.setAttribute("data-result", "true")
+}
 
 let showResult = (current) => {
   let result = getResult(current)
