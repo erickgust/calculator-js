@@ -10,14 +10,14 @@ let doOperation = (signal, number1, number2) => {
   switch signal {
   | "+" => number1 +. number2
   | "-" => number1 -. number2
-  | "x" => number1 *. number2
-  | "÷" => number1 /. number2
+  | "*" => number1 *. number2
+  | "/" => number1 /. number2
   | _ => 0 -> Js.Int.toFloat
   }
 }
 
 let rec solveOperation = (operation, regex) => {
-  let [match, signal] =  switch Js.Re.exec_(regex, operation) {
+  let [match, signal] = switch Js.Re.exec_(regex, operation) {
     | Some(result) => {
       let match = switch Js.Nullable.toOption(Js.Re.captures(result)[0]) {
         | Some(string) => string
@@ -53,7 +53,7 @@ and getOperation = (operation, regex) => {
 
 let getResult = (value) => {
   let result = value
-    -> getOperation(createRegex("[x÷]"))
+    -> getOperation(createRegex("[*/]"))
     -> getOperation(createRegex("[-+]"))
   result
 }

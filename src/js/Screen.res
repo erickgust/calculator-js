@@ -18,11 +18,18 @@ let current = createScreenComponents("current")
 let result = createScreenComponents("result")
 
 let getCurrent = () => {
-  current -> Element.textContent
+  current
+    -> Element.textContent
+    -> Js.String2.replace("x", "*")
+    -> Js.String2.replace("÷", "/")
 }
 
 let addCurrent = (value) => {
-  current -> Element.setTextContent(value)
+  current -> Element.setTextContent(
+    value
+      -> Js.String2.replace("*", "x")
+      -> Js.String2.replace("/", "÷")
+  )
 }
 
 let addResult = (value) => {

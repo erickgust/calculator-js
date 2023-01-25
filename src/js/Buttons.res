@@ -22,7 +22,7 @@ let handleClickNumber = (value) => {
 }
 
 let isLastItemAnOperator = (value) => {
-  let operators = ["-", "+", "x", "÷"]
+  let operators = ["-", "+", "*", "/"]
   let lastItem = value -> Js.String2.sliceToEnd(~from=-1)
   operators -> Js.Array2.includes(lastItem)
 }
