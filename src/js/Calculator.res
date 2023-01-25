@@ -17,30 +17,33 @@ let doOperation = (signal, number1, number2) => {
 }
 
 let rec solveOperation = (operation, regex) => {
-  let [match, signal] = switch Js.Re.exec_(regex, operation) {
-    | Some(result) => {
-      let match = switch Js.Nullable.toOption(Js.Re.captures(result)[0]) {
-        | Some(string) => string
-        | None => ""
-      }
-      let signal = switch Js.Nullable.toOption(Js.Re.captures(result)[1]) {
-        | Some(string) => string
-        | None => ""
-      }
-      [match, signal]
+  let result = Js.Re.exec_(regex, operation)
+
+  let fullMatch = switch result {
+    | Some(res) => switch Js.Nullable.toOption(Js.Re.captures(res)[0]) {
+      | Some(string) => string
+      | None => ""
     }
-    | None => []
+    | None => ""
   }
 
-  let numbers = match -> Js.String2.split(signal)
+  let operatorSignal = switch result {
+  | Some(res) => switch Js.Nullable.toOption(Js.Re.captures(res)[1]) {
+    | Some(string) => string
+    | None => ""
+  }
+  | None => ""
+  }
+
+  let numbers = fullMatch -> Js.String2.split(operatorSignal)
   let result = doOperation(
-    signal,
+    operatorSignal,
     Js.Float.fromString(numbers[0]),
     Js.Float.fromString(numbers[1]
   ))
 
   let addResultInOperation = operation
-    -> Js.String2.split(match)
+    -> Js.String2.split(fullMatch)
     -> Js.Array2.joinWith(Belt.Float.toString(result))
 
   getOperation(addResultInOperation, regex)
